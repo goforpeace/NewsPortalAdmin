@@ -13,7 +13,8 @@ app.use(body_parser.json())
 
 if (process.env.mode === 'production') {
     app.use(cors({
-        origin: ["https://news-portal-admin.vercel.app"]
+    origin: ["https://news-portal-admin.vercel.app"],
+    credentials: true // Allow credentials
     }));
 } else {
     app.use(cors({
