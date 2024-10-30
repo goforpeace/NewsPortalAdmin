@@ -5,7 +5,7 @@ const mode = development
 let base_url = ''
 
 if (mode === production) {
-    base_url = ""
+    base_url = "https://news-portal-admin.vercel.app/"
 } else {
     base_url = 'http://localhost:5000'
 }
