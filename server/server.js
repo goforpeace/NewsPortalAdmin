@@ -16,7 +16,7 @@ if (process.env.mode === 'production') {
 } else {
     app.use(cors({
         // origin: ["https://news-portal-admin-hjo9.vercel.app/login", "https://news-portal-admin.vercel.app"]
-         origin: ["https://news-portal-admin-hjo9.vercel.app"]
+         origin: ["https://news-portal-admin.vercel.app"]
     }))
 }
 
