@@ -7,6 +7,7 @@ const advertisementRoutes = require('./routes/advertisement');
 const authRoutes = require('./routes/authRoutes');
 const newsRoute = require('./routes/newsRoute');
 
+// Load environment variables
 dotenv.config();
 
 const app = express();
@@ -19,13 +20,22 @@ const allowedOrigins = [
 ];
 
 if (process.env.mode === 'production') {
+    // In production mode, allow only specific origins
     app.use(cors({
         origin: allowedOrigins,
-        credentials: true // Allow credentials (cookies, authorization headers, etc.)
+        methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+        allowedHeaders: ['Content-Type', 'Authorization'],
+        credentials: true, // Allow credentials (cookies, authorization headers, etc.)
+        optionsSuccessStatus: 200 // For legacy browsers that choke on 204
     }));
 } else {
+    // In development mode, allow localhost for testing
     app.use(cors({
-        origin: ["http://localhost:5173"]
+        origin: ["http://localhost:5173"],
+        methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+        allowedHeaders: ['Content-Type', 'Authorization'],
+        credentials: true,
+        optionsSuccessStatus: 200
     }));
 }
 
@@ -39,6 +49,8 @@ app.use((req, res, next) => {
 app.use('/api/advertisement', advertisementRoutes);
 app.use('/api/auth', authRoutes); // Explicitly define the API prefix
 app.use('/api/news', newsRoute); // Explicitly define the API prefix
+
+// Basic root route
 app.get('/', (req, res) => res.send('Hello World!'));
 
 // Database connection
@@ -47,6 +59,8 @@ db_connect();
 // Start server
 const port = process.env.PORT || 5000; // Fallback to port 5000 if PORT is not defined
 app.listen(port, () => console.log(`Server is running on port ${port}!`));
+
+
 
 
 // const express = require('express')
